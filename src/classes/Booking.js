@@ -1,5 +1,5 @@
 class Bookings {
-  constructor(bookings, ) {
+  constructor() {
 
   }
 }
