@@ -1,6 +1,67 @@
 /* This is an example of how to import a partial scss file*/
+
+//fonts 
+// font-family: 'Lobster', cursive;
+// font-family: 'Open Sans', sans-serif;
 @import '_variables';
 
+// * {
+//   border: 2px solid black;
+// }
+
+html {
+
+}
+
 body {
-  background: $primary-background;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  width: 100vw;
+}
+
+
+// head nav ---------------------------
+.head-navigation {
+  display: flex;
+  border: 1px black;
+  background-color: #455767;
+}
+
+.user-info-section {
+  width: 20vw;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100vw;
+  display: flex;
+}
+
+.check-bookings-button,
+.expense-tracking-button {
+  width: 20vw;
+  height: 10vh;
+  height: 10vh;
+  margin-top: 2vh;
+  background-color: transparent;
+  color: white;
+  font-size: 20px;
+  font-family: $regular-font;
+}
+
+// main section --------------------
+
+.page-title-box {
+  width: 100vw;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  font-family: $rock-lobster;
 }
