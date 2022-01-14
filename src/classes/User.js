@@ -6,7 +6,11 @@ class User {
   
   }
 
-  calculateCurrentBooking(id, date) {
+  calculateCurrentBooking(id) {
+
+    //current user
+    // current date 
+
     // This function will take in a user id as an argument 
     //will also take in a date argument
     // match that id with a booking 
