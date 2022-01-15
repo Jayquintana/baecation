@@ -1,34 +1,46 @@
 
 class User {
-  constructor(id, name) {
+  constructor(id, name, bookings) {
     this.id = id;
     this.name = name;
+    this.bookings = bookings
+    this.currentBookings = []
   
   }
 
-  calculateCurrentBooking(id, todaysDate) {
+  calculateCurrentBooking(todaysDate) {
+    let createBooking;
+    const userBookings = this.bookings.getUserBookings(this.id)
 
-    //current user
-    // current date 
+    const compareDates = userBookings.filter((booking) => {
+      return booking.date === todaysDate
+    });
 
-    // This function will take in a user id as an argument 
-    //will also take in a date argument
-    // match that id with a booking 
-    //will match the date to see if the booking is for today
-    // use the booking method to get the room 
-    //now we have a booking obj and we want to spit put an object of our own 
+    const bookingRooms = compareDates.map((booking) => {
+      return this.bookings.getBookingRoom(booking.id)
+    })
+
+    const pushBookings = compareDates.forEach((booking)=>{
+      const pushRooms = bookingRooms.forEach((room)=>{
+          const createBooking = {
+            userId: booking.userID,
+            date: booking.date,
+            roomNumber: room.number,
+            roomType: room.roomType,
+            bidet: room.bidet,
+            bedSize: room.bedSize,
+            numBeds: room.numBeds,
+            Cost: room.costPerNight
+        }
+        this.currentBookings.push(createBooking)
+      })
+    })
+
     
 
-      // expected output
-    // const booking = {
-    //   roomNumber: 12,
-    //   dateBooked: "2022/01/24",
-    //   roomType: "residential suite", 
-    //   bidet: false,
-    //   bedSize: "king",
-    //   numBeds: 1,  
-    //   costPerNight: 491.14
-    // }
+
+
+    console.log(this.currentBookings);
   }
 }
 

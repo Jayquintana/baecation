@@ -1,13 +1,16 @@
 import { expect } from 'chai';
 import User from '../src/classes/User.js'
+import Booking from '../src/classes/Booking.js'
 import customers from '../src/test-data/customer-data.js'
+import bookings from '../src/test-data/booking-data.js'
+import rooms from '../src/test-data/room-data.js'
 
 describe('User', () => {
+  const booking = new Booking(bookings, rooms)
   const users = customers.map((user) => {
-    return new User(user.id, user.name)
+    return new User(user.id, user.name, booking)
   })
 
-  console.log(users);
 
   it('should be a function', () => {
     expect(User).to.be.a('function')
@@ -28,6 +31,6 @@ describe('User', () => {
   })
 
   it('should show the users current booking', () => {
-    expect(users[0].calculateCurrentBooking()).to.deep.equal()
+    expect(users[39].calculateCurrentBooking('2022/01/14')).to.deep.equal()
   })
 })
