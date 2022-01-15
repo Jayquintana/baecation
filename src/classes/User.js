@@ -4,14 +4,11 @@ class User {
     this.id = id;
     this.name = name;
     this.bookings = bookings
-    this.currentBookings = []
-  
   }
 
   calculateCurrentBooking(todaysDate) {
-    let createBooking;
+    let createdBookings = []
     const userBookings = this.bookings.getUserBookings(this.id)
-
     const compareDates = userBookings.filter((booking) => {
       return booking.date === todaysDate
     });
@@ -32,16 +29,14 @@ class User {
             numBeds: room.numBeds,
             Cost: room.costPerNight
         }
-        this.currentBookings.push(createBooking)
+        createdBookings.push(createBooking)
       })
     })
-
+    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber, booking])).values(),];
     
-
-
-
-    console.log(this.currentBookings);
+    return filteredWithoutDuplicates;
   }
+  
 }
 
 module.exports = User;

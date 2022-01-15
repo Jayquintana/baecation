@@ -31,6 +31,30 @@ describe('User', () => {
   })
 
   it('should show the users current booking', () => {
-    expect(users[39].calculateCurrentBooking('2022/01/14')).to.deep.equal()
+    users[39].calculateCurrentBooking('2022/01/14')
+    expect(users[39].calculateCurrentBooking('2022/01/14')).to.deep.equal(
+      [
+        {
+          userId: 40,
+          date: '2022/01/14',
+          roomNumber: 22,
+          roomType: 'single room',
+          bidet: false,
+          bedSize: 'full',
+          numBeds: 2,
+          Cost: 350.31
+        },
+        {
+          userId: 40,
+          date: '2022/01/14',
+          roomNumber: 24,
+          roomType: 'suite',
+          bidet: false,
+          bedSize: 'queen',
+          numBeds: 1,
+          Cost: 327.24
+        }
+      ]
+    )
   })
 })
