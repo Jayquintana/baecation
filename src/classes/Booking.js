@@ -22,4 +22,4 @@ class Booking {
   }
 }
 
-module.exports = Booking ;
+module.exports = Booking;

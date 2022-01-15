@@ -6,7 +6,7 @@ class User {
   
   }
 
-  calculateCurrentBooking(id) {
+  calculateCurrentBooking(id, todaysDate) {
 
     //current user
     // current date 
@@ -30,7 +30,6 @@ class User {
     //   costPerNight: 491.14
     // }
   }
-
-
-
 }
+
+module.exports = User;
