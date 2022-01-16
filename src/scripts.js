@@ -1,29 +1,37 @@
 
 import './css/base.scss';
-import './images/turing-logo.png'
-import './classes/Booking.js'
+import Booking from '../src/classes/Booking.js';
+import User from '../src/classes/User.js';
 import { customerData, roomData, bookingData} from './apiCalls';
 
 
 // navigation section 
+const navButtonsBox = document.querySelector('.nav-buttons');
+const bookingSection = document.querySelector('.bookings-section')
 const userTitle = document.querySelector('.hello-user-title');
 const currentPageTitle = document.querySelector('.current-page-title');
 const checkBookingsButton = document.querySelector('.check-bookings-button');
 const expenseTrackingButton = document.querySelector('.expense-tracking-button');
-const navButtonsBox = document.querySelector('.nav-buttons');
-const bookingsSection = document.querySelector('.bookings-section')
+const goBackButton = document.querySelector('.go-back-button')
 //main section 
 const pageTitle = document.querySelector('.page-title')
 
 
 //global vaiables 
 let currentUser;
+let bookings; 
+let users;
+
 
 
 //promise and api related 
 Promise.all([customerData, roomData, bookingData])
 .then((data) => {
-  console.log(data);
+  bookings = new Booking(data[2].bookings, data[1].rooms)
+  users = data[0].customers.map((customer) => {
+    return new User(customer.id, customer.name, bookings)
+  })
+  currentUser = users[Math.floor(Math.random() * users.length)];
 })
 
 
@@ -53,9 +61,18 @@ const createTodaysDate = () => {
   return today
 }
 
-const createBookings = (date, roomNumber, roomType, bidet, bedsize) => {
-  bookingsSection.innerHTML = `
-  <table class="booking-table">
+const backToMain = () => {
+  navButtonsBox.innerHTML = `
+  <button class="check-bookings-button">Check Bookings</button>
+        <button class="expense-tracking-button">Expense Tracking</button>
+  `
+  changeText(pageTitle, 'Book With baecation')
+  hide(goBackButton)
+}
+
+const createBookings = (date, roomNumber, roomType, bidet, bedSize, numBeds, cost) => {
+    bookingSection.innerHTML = `
+        <table class="booking-table">
           <tr>
             <th>Date:</th>
             <th>Room Number:</th>
@@ -66,18 +83,19 @@ const createBookings = (date, roomNumber, roomType, bidet, bedsize) => {
             <th>Price Per night:</th>
           </tr>
           <tr>
-            <td>2022/01/14</td>
-            <td>3</td>
-            <td>suit</td>
-            <td>false</td>
-            <td>queen</td>
-            <td>2</td>
-            <td>457.88</td>
+            <td>${date}</td>
+            <td>${roomNumber}</td>
+            <td>${roomType}</td>
+            <td>${bidet}</td>
+            <td>${bedSize}</td>
+            <td>${numBeds}</td>
+            <td>${cost}</td>
           </tr>
         </table>`
 }
 
-const viewBookings = () => {
+const checkCurrentBookings = () => {
+  show(goBackButton)
   changeText(pageTitle, 'Current Bookings')
   navButtonsBox.innerHTML = `
   <button class="past-bookings">Past Bookings</button>
@@ -85,7 +103,14 @@ const viewBookings = () => {
   <button class="future-bookings">Upcoming Bookings</button>
   `
 
+  const loop = currentUser.calculateCurrentBooking(createTodaysDate()).map((booking) => {
+    createBookings(booking.date, booking.roomNumber, 
+                    booking.roomType, booking.bidet, 
+                    booking.bedSize, booking.numBeds, 
+                    booking.Cost)
+})
 
+  console.log(currentUser.calculateCurrentBooking(createTodaysDate()));
 
 }
 
@@ -94,4 +119,5 @@ const viewBookings = () => {
 
 
 //event listeners 
-checkBookingsButton.addEventListener('click',viewBookings)
+checkBookingsButton.addEventListener('click', checkCurrentBookings)
+goBackButton.addEventListener('click', backToMain)

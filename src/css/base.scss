@@ -24,6 +24,9 @@ th {
 text-align: left;
 }
 
+.hidden {
+  display: none;
+}
 
 // head nav ---------------------------
 .head-navigation {
@@ -58,6 +61,11 @@ text-align: left;
   font-family: $regular-font;
 }
 
+.go-back-button {
+    background: transparent;
+    color: white;
+}
+
 // main section --------------------
 
 .page-title-box {
@@ -72,7 +80,7 @@ text-align: left;
 
 
 // booking section 
-.bookings-box {
+.bookings-section {
   display: flex;
   flex-direction: column;
   align-items: center;
