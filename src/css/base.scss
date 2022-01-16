@@ -9,10 +9,6 @@
 //   border: 2px solid black;
 // }
 
-html {
-
-}
-
 body {
   height: 100vh;
   width: 100%;
@@ -22,6 +18,10 @@ body {
 
 main {
   width: 100vw;
+}
+
+th {
+text-align: left;
 }
 
 
@@ -44,7 +44,10 @@ main {
 }
 
 .check-bookings-button,
-.expense-tracking-button {
+.expense-tracking-button,
+.current-bookings,
+.past-bookings,
+.future-bookings {
   width: 20vw;
   height: 10vh;
   height: 10vh;
@@ -64,4 +67,24 @@ main {
   align-items: center;
   justify-content: center;
   font-family: $rock-lobster;
+}
+
+
+
+// booking section 
+.bookings-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.booking-table {
+  width: 70%;
+  background-color:$darker-blue;
+  margin-bottom: 3%;
+
+}
+
+th, td {
+  background-color: white;
 }
