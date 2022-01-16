@@ -13,6 +13,10 @@ const currentPageTitle = document.querySelector('.current-page-title');
 const checkBookingsButton = document.querySelector('.check-bookings-button');
 const expenseTrackingButton = document.querySelector('.expense-tracking-button');
 const goBackButton = document.querySelector('.go-back-button')
+const currentBookingButton = document.querySelector('.current-bookings')
+const pastBookingButton = document.querySelector('.past-bookings')
+const futureBookingButton = document.querySelector('.future-bookings');
+
 //main section 
 const pageTitle = document.querySelector('.page-title')
 
@@ -28,10 +32,10 @@ let users;
 Promise.all([customerData, roomData, bookingData])
 .then((data) => {
   bookings = new Booking(data[2].bookings, data[1].rooms)
-  users = data[0].customers.map((customer) => {
-    return new User(customer.id, customer.name, bookings)
-  })
-  currentUser = users[Math.floor(Math.random() * users.length)];
+  // users = data[0].customers.map((customer) => {
+  //   return new User(customer.id, customer.name, bookings)
+  // })
+  currentUser = new User(41, 'jaypops', bookings)
 })
 
 
@@ -61,17 +65,20 @@ const createTodaysDate = () => {
   return today
 }
 
+
 const backToMain = () => {
-  navButtonsBox.innerHTML = `
-  <button class="check-bookings-button">Check Bookings</button>
-        <button class="expense-tracking-button">Expense Tracking</button>
-  `
+  bookingSection.innerHTML = ''
+  hide(currentBookingButton)
+  hide(pastBookingButton)
+  hide(futureBookingButton)
+  show(expenseTrackingButton)
+  show(checkBookingsButton)
   changeText(pageTitle, 'Book With baecation')
   hide(goBackButton)
 }
 
-const createBookings = (date, roomNumber, roomType, bidet, bedSize, numBeds, cost) => {
-    bookingSection.innerHTML = `
+const createBookings = (booking) => {
+    bookingSection.innerHTML += `
         <table class="booking-table">
           <tr>
             <th>Date:</th>
@@ -83,34 +90,47 @@ const createBookings = (date, roomNumber, roomType, bidet, bedSize, numBeds, cos
             <th>Price Per night:</th>
           </tr>
           <tr>
-            <td>${date}</td>
-            <td>${roomNumber}</td>
-            <td>${roomType}</td>
-            <td>${bidet}</td>
-            <td>${bedSize}</td>
-            <td>${numBeds}</td>
-            <td>${cost}</td>
+            <td>${booking.date}</td>
+            <td>${booking.roomNumber}</td>
+            <td>${booking.roomType}</td>
+            <td>${booking.bidet}</td>
+            <td>${booking.bedSize}</td>
+            <td>${booking.numBeds}</td>
+            <td>${booking.Cost}</td>
           </tr>
         </table>`
 }
 
 const checkCurrentBookings = () => {
+  bookingSection.innerHTML = ''
+  hide(expenseTrackingButton)
+  hide(checkBookingsButton)
   show(goBackButton)
+  show(currentBookingButton)
+  show(pastBookingButton)
+  show(futureBookingButton)
   changeText(pageTitle, 'Current Bookings')
-  navButtonsBox.innerHTML = `
-  <button class="past-bookings">Past Bookings</button>
-  <button class="current-bookings">Current Bookings</button>
-  <button class="future-bookings">Upcoming Bookings</button>
-  `
+  if (currentUser.calculateCurrentBooking(createTodaysDate()).length) { 
+      const displayBooking = currentUser.calculateCurrentBooking(createTodaysDate()).map((booking) => {
+        createBookings(booking)
+    })
+    return displayBooking
+  } else {
+    changeText(pageTitle, ' 0 Bookings Found')
+  }
 
-  const loop = currentUser.calculateCurrentBooking(createTodaysDate()).map((booking) => {
-    createBookings(booking.date, booking.roomNumber, 
-                    booking.roomType, booking.bidet, 
-                    booking.bedSize, booking.numBeds, 
-                    booking.Cost)
-})
+}
 
-  console.log(currentUser.calculateCurrentBooking(createTodaysDate()));
+const checkPastBookings = () => {
+  bookingSection.innerHTML = ''
+  changeText(pageTitle, 'Past Bookings')
+  if (currentUser.calculatePastBooking(createTodaysDate()).length) {
+    const displayBooking = currentUser.calculatePastBooking(createTodaysDate()).map((booking) => {
+      createBookings(booking)
+    })
+  } else {
+    changeText(pageTitle, ' 0 Bookings Found')
+  }
 
 }
 
@@ -121,3 +141,5 @@ const checkCurrentBookings = () => {
 //event listeners 
 checkBookingsButton.addEventListener('click', checkCurrentBookings)
 goBackButton.addEventListener('click', backToMain)
+pastBookingButton.addEventListener('click', checkPastBookings)
+currentBookingButton.addEventListener('click', checkCurrentBookings)
