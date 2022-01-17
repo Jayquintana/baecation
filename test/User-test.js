@@ -57,4 +57,51 @@ describe('User', () => {
       ]
     )
   })
+
+  it('should show the users past bookings', () => {
+    expect(users[10].calculatePastBooking('2022/01/14')).to.deep.equal(
+      [
+        {
+          userId: 11,
+          date: '2022/01/12',
+          roomNumber: 15,
+          roomType: 'residential suite',
+          bidet: false,
+          bedSize: 'full',
+          numBeds: 1,
+          Cost: 294.56
+        }
+      ]
+    )
+
+    expect(users[7].calculatePastBooking('2022/01/14')).to.deep.equal()
+  })
+
+  it('should show the users upcoming bookings ', () => {
+    expect(users[2].calculateFutureBooking('2022/01/14')).to.deep.equal(
+      [
+        {
+          userId: 3,
+          date: '2022/01/27',
+          roomNumber: 23,
+          roomType: 'residential suite',
+          bidet: false,
+          bedSize: 'queen',
+          numBeds: 2,
+          Cost: 176.36
+        },
+        {
+          userId: 3,
+          date: '2022/01/27',
+          roomNumber: 14,
+          roomType: 'residential suite',
+          bidet: false,
+          bedSize: 'twin',
+          numBeds: 1,
+          Cost: 457.88
+        }
+      ]
+    )
+  })
+
 })

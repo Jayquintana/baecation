@@ -9,10 +9,6 @@
 //   border: 2px solid black;
 // }
 
-html {
-
-}
-
 body {
   height: 100vh;
   width: 100%;
@@ -24,6 +20,13 @@ main {
   width: 100vw;
 }
 
+th {
+text-align: left;
+}
+
+.hidden {
+  display: none;
+}
 
 // head nav ---------------------------
 .head-navigation {
@@ -44,7 +47,10 @@ main {
 }
 
 .check-bookings-button,
-.expense-tracking-button {
+.expense-tracking-button,
+.current-bookings,
+.past-bookings,
+.future-bookings {
   width: 20vw;
   height: 10vh;
   height: 10vh;
@@ -53,6 +59,11 @@ main {
   color: white;
   font-size: 20px;
   font-family: $regular-font;
+}
+
+.go-back-button {
+    background: transparent;
+    color: white;
 }
 
 // main section --------------------
@@ -64,4 +75,24 @@ main {
   align-items: center;
   justify-content: center;
   font-family: $rock-lobster;
+}
+
+
+
+// booking section 
+.bookings-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.booking-table {
+  width: 70%;
+  background-color:$darker-blue;
+  margin-bottom: 3%;
+
+}
+
+th, td {
+  background-color: white;
 }
