@@ -37,7 +37,7 @@ class User {
       })
     })
     const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber,booking])).values(),];
-  
+
     return filteredWithoutDuplicates;
   }
 
@@ -75,7 +75,7 @@ class User {
     })
 
     const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber, booking])).values(),];
-
+    
     return filteredWithoutDuplicates;
     
   
@@ -114,10 +114,51 @@ class User {
       })
     })
     const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber, booking])).values(),];
-
+    console.log(filteredWithoutDuplicates, 'filter');
     return filteredWithoutDuplicates;
   }
 
+  calculateTotalCost() {
+    const userBookings = this.bookings.getUserBookings(this.id)
+
+    const bookingRooms = userBookings.map((booking) => {
+      return this.bookings.getBookingRoom(booking.id)
+    })
+    const totalCost = bookingRooms.reduce((acc, room) => {
+      return acc += room.costPerNight
+    },0)
+
+    return Math.round(totalCost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  calculateAllUsersBookings() {
+    let createdBookings = []
+    const userBookings = this.bookings.getUserBookings(this.id)
+    const bookingRooms = userBookings.map((booking) => {
+      return this.bookings.getBookingRoom(booking.id)
+    })
+    const pushBookings = userBookings.forEach((booking) => {
+      const pushRooms = bookingRooms.forEach((room) => {
+        const createBooking = {
+          bookingID: booking.id,
+          userId: booking.userID,
+          date: booking.date,
+          roomNumber: room.number,
+          roomType: room.roomType,
+          bidet: room.bidet,
+          bedSize: room.bedSize,
+          numBeds: room.numBeds,
+          Cost: room.costPerNight
+        }
+        createdBookings.push(createBooking)
+      })
+    })
+    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber, booking])).values(),];
+    console.log(filteredWithoutDuplicates);
+    return filteredWithoutDuplicates;
+  }
+
+  
   
   
 }

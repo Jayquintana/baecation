@@ -31,10 +31,10 @@ describe('User', () => {
   })
 
   it('should show the users current booking', () => {
-    users[39].calculateCurrentBooking('2022/01/14')
     expect(users[39].calculateCurrentBooking('2022/01/14')).to.deep.equal(
       [
         {
+          bookingID: '5fwrgu4i7k55hl6z1',
           userId: 40,
           date: '2022/01/14',
           roomNumber: 22,
@@ -45,6 +45,7 @@ describe('User', () => {
           Cost: 350.31
         },
         {
+          bookingID: '5fwrgu4i7k55hl6z1',
           userId: 40,
           date: '2022/01/14',
           roomNumber: 24,
@@ -62,6 +63,7 @@ describe('User', () => {
     expect(users[10].calculatePastBooking('2022/01/14')).to.deep.equal(
       [
         {
+          bookingID: '5fwrgu4i7k55hl6wj',
           userId: 11,
           date: '2022/01/12',
           roomNumber: 15,
@@ -74,13 +76,14 @@ describe('User', () => {
       ]
     )
 
-    expect(users[7].calculatePastBooking('2022/01/14')).to.deep.equal()
+    expect(users[7].calculatePastBooking('2022/01/14')).to.deep.equal([])
   })
 
   it('should show the users upcoming bookings ', () => {
     expect(users[2].calculateFutureBooking('2022/01/14')).to.deep.equal(
       [
         {
+          bookingID: '5fwrgu4i7k55hl6zn',
           userId: 3,
           date: '2022/01/27',
           roomNumber: 23,
@@ -91,6 +94,7 @@ describe('User', () => {
           Cost: 176.36
         },
         {
+          bookingID: '5fwrgu4i7k55hl6zn',
           userId: 3,
           date: '2022/01/27',
           roomNumber: 14,
@@ -102,6 +106,10 @@ describe('User', () => {
         }
       ]
     )
+  })
+
+  it.only('should calculate the total cost',() => {
+    expect(users[2].calculateTotalCost()).to.equal(895.5)
   })
 
 })
