@@ -137,7 +137,7 @@ const checkPastBookings = () => {
 
 const checkFutureBookings = () => {
   bookingSection.innerHTML = ''
-  changeText(pageTitle, 'Past Bookings')
+  changeText(pageTitle, 'Upcoming Bookings')
   if (currentUser.calculateFutureBooking(createTodaysDate()).length) {
     const displayBooking = currentUser.calculateFutureBooking(createTodaysDate()).map((booking) => {
       createBookings(booking)
@@ -147,10 +147,37 @@ const checkFutureBookings = () => {
   }
 }
 
+const displayTotalCost = () => {
+  bookingSection.innerHTML = ''
+  hide(expenseTrackingButton)
+  hide(checkBookingsButton)
+  show(goBackButton)
+  changeText(pageTitle, `Total Spent At Baecation: $ ${currentUser.calculateTotalCost()} Dollars`)
 
-
-  
-
+  currentUser.calculateAllUsersBookings().map((booking) => {
+    bookingSection.innerHTML += `
+        <table class="booking-table">
+          <tr>
+            <th>Date:</th>
+            <th>Room Number:</th>
+            <th>Room Type:</th>
+            <th>Bidet:</th>
+            <th>Bed Size:</th>
+            <th>Number of beds</th>
+            <th>Price Per night:</th>
+          </tr>
+          <tr>
+            <td>${booking.date}</td>
+            <td>${booking.roomNumber}</td>
+            <td>${booking.roomType}</td>
+            <td>${booking.bidet}</td>
+            <td>${booking.bedSize}</td>
+            <td>${booking.numBeds}</td>
+            <td>${booking.Cost}</td>
+          </tr>
+        </table>`
+  })
+}
 
 //event listeners 
 checkBookingsButton.addEventListener('click', checkCurrentBookings)
@@ -158,3 +185,4 @@ goBackButton.addEventListener('click', backToMain)
 pastBookingButton.addEventListener('click', checkPastBookings)
 currentBookingButton.addEventListener('click', checkCurrentBookings)
 futureBookingButton.addEventListener('click', checkFutureBookings)
+expenseTrackingButton.addEventListener('click', displayTotalCost)
