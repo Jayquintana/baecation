@@ -32,10 +32,12 @@ let users;
 Promise.all([customerData, roomData, bookingData])
 .then((data) => {
   bookings = new Booking(data[2].bookings, data[1].rooms)
-  // users = data[0].customers.map((customer) => {
-  //   return new User(customer.id, customer.name, bookings)
-  // })
-  currentUser = new User(41, 'jaypops', bookings)
+  users = data[0].customers.map((customer) => {
+    return new User(customer.id, customer.name, bookings)
+  })
+  currentUser = users[Math.floor(Math.random() * users.length)];
+  console.log(currentUser);
+  
 })
 
 
@@ -131,8 +133,20 @@ const checkPastBookings = () => {
   } else {
     changeText(pageTitle, ' 0 Bookings Found')
   }
-
 }
+
+const checkFutureBookings = () => {
+  bookingSection.innerHTML = ''
+  changeText(pageTitle, 'Past Bookings')
+  if (currentUser.calculateFutureBooking(createTodaysDate()).length) {
+    const displayBooking = currentUser.calculateFutureBooking(createTodaysDate()).map((booking) => {
+      createBookings(booking)
+    })
+  } else {
+    changeText(pageTitle, ' 0 Bookings Found')
+  }
+}
+
 
 
   
@@ -143,3 +157,4 @@ checkBookingsButton.addEventListener('click', checkCurrentBookings)
 goBackButton.addEventListener('click', backToMain)
 pastBookingButton.addEventListener('click', checkPastBookings)
 currentBookingButton.addEventListener('click', checkCurrentBookings)
+futureBookingButton.addEventListener('click', checkFutureBookings)

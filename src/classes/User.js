@@ -18,6 +18,7 @@ class User {
       return this.bookings.getBookingRoom(booking.id)
     })
 
+    console.log(compareDates, 'current book');
 
     const pushBookings = compareDates.forEach((booking)=>{
       const pushRooms = bookingRooms.forEach((room)=>{
@@ -35,7 +36,7 @@ class User {
         createdBookings.push(createBooking)
       })
     })
-    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.bookingID, booking])).values(),];
+    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber,booking])).values(),];
   
     return filteredWithoutDuplicates;
   }
@@ -47,13 +48,14 @@ class User {
     const compareDates = userBookings.filter((booking) => {
         const date1 = new Date(todaysDate);
         const date2 = new Date(booking.date)
-
         return date1 > date2
     });
 
     const bookingRooms = compareDates.map((booking) => {
       return this.bookings.getBookingRoom(booking.id)
     })
+
+    console.log(compareDates, 'past book');
 
     const pushBookings = compareDates.forEach((booking) => {
       const pushRooms = bookingRooms.forEach((room) => {
@@ -71,9 +73,12 @@ class User {
         createdBookings.push(createBooking)
       })
     })
-    console.log(createdBookings);
-    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.bookingID, booking])).values(),];
+
+    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber, booking])).values(),];
+
     return filteredWithoutDuplicates;
+    
+  
   }
 
   calculateFutureBooking(todaysDate) {
@@ -91,6 +96,7 @@ class User {
       return this.bookings.getBookingRoom(booking.id)
     })
 
+    console.log(compareDates, 'future book');
     const pushBookings = compareDates.forEach((booking) => {
       const pushRooms = bookingRooms.forEach((room) => {
         const createBooking = {
@@ -107,7 +113,7 @@ class User {
         createdBookings.push(createBooking)
       })
     })
-    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.bookingID, booking])).values(),];
+    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber, booking])).values(),];
 
     return filteredWithoutDuplicates;
   }
