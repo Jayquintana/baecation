@@ -53,9 +53,7 @@ label {
   margin-left: 10%;
 }
 
-.go-back-button {
-  font-family: $regular-font;
-}
+
 .nav-buttons {
   display: flex;
   justify-content: space-around;
@@ -81,6 +79,8 @@ label {
 .go-back-button {
     background: transparent;
     color: white;
+    font-family: $regular-font;
+    margin-left: 5%;
 }
 
 // main section --------------------

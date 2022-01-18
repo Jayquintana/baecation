@@ -28,6 +28,8 @@ const availableRooms = document.querySelector('.available-rooms');
 const selectDateTitle = document.querySelector('.start-booking');
 const filterTags = document.querySelector('.filter-tags');
 const checkboxes = document.querySelectorAll('.checkbox')
+const filterTagstitle = document.querySelector('.tags-title')
+const allRoomsRadioButton = document.querySelector('#allRooms')
 
 //global vaiables 
 let currentUser;
@@ -47,9 +49,8 @@ Promise.all([customerData, roomData, bookingData])
   currentUser = users[Math.floor(Math.random() * users.length)];
   console.log(currentUser);
   displayUserName()
-  dateInput.value = dayjs().format('YYYY-MM-DD')
   dateInput.min = dayjs().format('YYYY-MM-DD')
-  // filterCheckBoxes()
+  filterCheckBoxes()
 })
 
 
@@ -183,7 +184,7 @@ const displayBookingDates = () => {
   const openRooms = currentUser.bookings.availableRooms(selectedDate)
   if (openRooms.length) {
       openRooms .map((room) => {
-        changeText(selectDateTitle, `Rooms Available On: ${selectedDate}`)
+        changeText(selectDateTitle, `Rooms Available On: ${dayjs(selectedDate).format('MM/DD/YYYY')}`)
         hide(dateInput)
         show(goBackButton)
         show(filterTags)
@@ -197,7 +198,6 @@ const displayBookingDates = () => {
               <th>Number of beds</th>
               <th>Price Per night:</th>
               <th>Book now!</th>
-
             </tr>
             <tr>
               <td>${room.number}</td>
@@ -216,22 +216,52 @@ const displayBookingDates = () => {
     }
 }
 
-// const filterCheckBoxes = () => {
-//   checkboxes.forEach((box) => {
-//     box.addEventListener('change', function () {
-//      const filteredRooms = displayRoomType(box.id)
-//       console.log(filteredRooms);
-    
-//     })
-//   })
-// }
+const filterCheckBoxes = () => {
+  checkboxes.forEach((box) => {
+    box.addEventListener('change', function () {
+      const filteredRooms = filterRoomsByTag(box.id)
+      if (filteredRooms.length) {
+        availableRooms.innerHTML = ''
+        filteredRooms.map((room) =>{
+          changeText(filterTagstitle, `Available ${room.roomType}s`)
+          availableRooms.innerHTML += `
+    <table class="booking-table">
+            <tr>
+              <th>Room Number:</th>
+              <th>Room Type:</th>
+              <th>Bidet:</th>
+              <th>Bed Size:</th>
+              <th>Number of beds</th>
+              <th>Price Per night:</th>
+              <th>Book now!</th>
+            </tr>
+            <tr>
+              <td>${room.number}</td>
+              <td>${room.roomType}</td>
+              <td>${room.bidet}</td>
+              <td>${room.bedSize}</td>
+              <td>${room.numBeds}</td>
+              <td>${room.costPerNight}</td>
+              <td><button class="book-now">Book</button></td>
+            </tr>
+          </table>
+    `
+        })
 
-// const displayRoomType = (roomType) => {
-//     currentUser.bookings.availableRooms(selectedDate).filter((room) => {
-//       console.log('hits');
-//       return room.roomType === roomType
-//     })
-// }
+      } else {
+        availableRooms.innerHTML = ''
+        changeText(filterTagstitle, 'Sorry No Rooms Available')
+      }
+    })
+  })
+}
+
+const filterRoomsByTag = (roomType) => {
+  const filteredRooms =  currentUser.bookings.availableRooms(selectedDate).filter((room) => {
+      return room.roomType === roomType
+    })
+  return filteredRooms
+}
 
 //event listeners 
 checkBookingsButton.addEventListener('click', checkCurrentBookings)
@@ -241,3 +271,7 @@ currentBookingButton.addEventListener('click', checkCurrentBookings)
 futureBookingButton.addEventListener('click', checkFutureBookings)
 expenseTrackingButton.addEventListener('click', displayTotalCost)
 dateInput.addEventListener('change', displayBookingDates);
+allRoomsRadioButton.addEventListener('change', function() {
+  changeText(filterTagstitle, 'All Rooms')
+  displayBookingDates()
+})
