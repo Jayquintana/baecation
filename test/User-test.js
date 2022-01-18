@@ -108,8 +108,8 @@ describe('User', () => {
     )
   })
 
-  it.only('should calculate the total cost',() => {
-    expect(users[2].calculateTotalCost()).to.equal(895.5)
+  it('should calculate the total cost',() => {
+    expect(users[2].calculateTotalCost()).to.equal(896)
   })
 
 })

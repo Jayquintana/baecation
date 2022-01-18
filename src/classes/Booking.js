@@ -4,22 +4,36 @@ class Booking {
     this.roomData = roomData;
   }
   getUserBookings(userId) {
-    let findBookings = this.bookingData.filter((booking) => {
+    const findBookings = this.bookingData.filter((booking) => {
         return booking.userID === userId
     })
     return findBookings
   }
 
   getBookingRoom(bookingId) {
-    let findBooking = this.bookingData.find((booking) => {
+    const findBooking = this.bookingData.find((booking) => {
       return booking.id === bookingId
     })
-
-    let findRoom = this.roomData.find((room) => {
+    const findRoom = this.roomData.find((room) => {
         return room.number ===  findBooking.roomNumber
     })
     return findRoom
   }
+
+  availableRooms(date) {
+    const availableRooms = [];
+    const findBookings = this.bookingData.filter((booking) => {
+      return booking.date === date
+    })
+    const findRooms = findBookings.map((booking) => {
+      return this.getBookingRoom(booking.id)
+    })
+    const filter = this.roomData.filter((allRoom) => !findRooms.find(room => allRoom.number === room.number))
+    console.log();
+    return filter
+  }
+
+  
 }
 
 module.exports = Booking;

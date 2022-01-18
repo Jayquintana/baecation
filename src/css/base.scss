@@ -38,7 +38,13 @@ text-align: left;
 .user-info-section {
   width: 20vw;
 }
+.hello-user-title {
+  font-family: $regular-font;
+}
 
+.go-back-button {
+  font-family: $regular-font;
+}
 .nav-buttons {
   display: flex;
   justify-content: space-around;
@@ -76,7 +82,25 @@ text-align: left;
   justify-content: center;
   font-family: $rock-lobster;
 }
+.start-booking {
+  font-family: $regular-font;
+}
 
+.select-date-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.date-input-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.date-input, 
+.date-input-box {
+  width: 50%;
+}
 
 
 // booking section 

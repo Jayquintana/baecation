@@ -3,11 +3,11 @@ import './css/base.scss';
 import Booking from '../src/classes/Booking.js';
 import User from '../src/classes/User.js';
 import { customerData, roomData, bookingData} from './apiCalls';
+import dayjs from 'dayjs';
 
 
 // navigation section 
 const navButtonsBox = document.querySelector('.nav-buttons');
-const bookingSection = document.querySelector('.bookings-section')
 const userTitle = document.querySelector('.hello-user-title');
 const currentPageTitle = document.querySelector('.current-page-title');
 const checkBookingsButton = document.querySelector('.check-bookings-button');
@@ -19,12 +19,19 @@ const futureBookingButton = document.querySelector('.future-bookings');
 
 //main section 
 const pageTitle = document.querySelector('.page-title')
+const bookingSection = document.querySelector('.bookings-section')
+const mainPage = document.querySelector('.main-section');
+const dateInput = document.querySelector('.date-input')
+const dateInputButton = document.querySelector('.date-input-button')
+const dateSelectionsection = document.querySelector('.date-selection-section')
+
 
 
 //global vaiables 
 let currentUser;
 let bookings; 
 let users;
+let selectedDate;
 
 
 
@@ -37,7 +44,9 @@ Promise.all([customerData, roomData, bookingData])
   })
   currentUser = users[Math.floor(Math.random() * users.length)];
   console.log(currentUser);
-  
+  displayUserName()
+  console.log(dayjs());
+  dateInput.value = createTodaysDate()
 })
 
 
@@ -55,7 +64,9 @@ const changeText = (element, text) => {
   element.innerText = text
 }
 //event handlers
-
+const displayUserName = () => {
+  userTitle.innerText = `Welcome! ${currentUser.name}`
+}
 const createTodaysDate = () => {
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
@@ -67,7 +78,6 @@ const createTodaysDate = () => {
   return today
 }
 
-
 const backToMain = () => {
   bookingSection.innerHTML = ''
   hide(currentBookingButton)
@@ -75,6 +85,7 @@ const backToMain = () => {
   hide(futureBookingButton)
   show(expenseTrackingButton)
   show(checkBookingsButton)
+  show(dateSelectionsection)
   changeText(pageTitle, 'Book With baecation')
   hide(goBackButton)
 }
@@ -105,6 +116,7 @@ const createBookings = (booking) => {
 
 const checkCurrentBookings = () => {
   bookingSection.innerHTML = ''
+  hide(dateSelectionsection )
   hide(expenseTrackingButton)
   hide(checkBookingsButton)
   show(goBackButton)
@@ -118,7 +130,7 @@ const checkCurrentBookings = () => {
     })
     return displayBooking
   } else {
-    changeText(pageTitle, ' 0 Bookings Found')
+    changeText(pageTitle, ' 0 Current Bookings Found')
   }
 
 }
@@ -131,7 +143,7 @@ const checkPastBookings = () => {
       createBookings(booking)
     })
   } else {
-    changeText(pageTitle, ' 0 Bookings Found')
+    changeText(pageTitle, ' 0 Past Bookings Found')
   }
 }
 
@@ -143,7 +155,7 @@ const checkFutureBookings = () => {
       createBookings(booking)
     })
   } else {
-    changeText(pageTitle, ' 0 Bookings Found')
+    changeText(pageTitle, ' 0 Upcoming Bookings Found')
   }
 }
 
@@ -151,32 +163,23 @@ const displayTotalCost = () => {
   bookingSection.innerHTML = ''
   hide(expenseTrackingButton)
   hide(checkBookingsButton)
+  hide(dateSelectionsection )
   show(goBackButton)
   changeText(pageTitle, `Total Spent At Baecation: $ ${currentUser.calculateTotalCost()} Dollars`)
 
   currentUser.calculateAllUsersBookings().map((booking) => {
-    bookingSection.innerHTML += `
-        <table class="booking-table">
-          <tr>
-            <th>Date:</th>
-            <th>Room Number:</th>
-            <th>Room Type:</th>
-            <th>Bidet:</th>
-            <th>Bed Size:</th>
-            <th>Number of beds</th>
-            <th>Price Per night:</th>
-          </tr>
-          <tr>
-            <td>${booking.date}</td>
-            <td>${booking.roomNumber}</td>
-            <td>${booking.roomType}</td>
-            <td>${booking.bidet}</td>
-            <td>${booking.bedSize}</td>
-            <td>${booking.numBeds}</td>
-            <td>${booking.Cost}</td>
-          </tr>
-        </table>`
+    createBookings(booking)
   })
+}
+const convertDate = (date) => {
+  
+}
+
+const displayBookingDates = () => {
+  selectedDate = dateInput.value
+  const openRooms = currentUser.bookings.availableRooms(selectedDate)
+  console.log(selectedDate);
+  
 }
 
 //event listeners 
@@ -186,3 +189,5 @@ pastBookingButton.addEventListener('click', checkPastBookings)
 currentBookingButton.addEventListener('click', checkCurrentBookings)
 futureBookingButton.addEventListener('click', checkFutureBookings)
 expenseTrackingButton.addEventListener('click', displayTotalCost)
+dateInput.addEventListener('change', displayBookingDates)
+

@@ -4,12 +4,12 @@ class User {
     this.id = id;
     this.name = name;
     this.bookings = bookings
-    this.pastBookings = []
   }
 
   calculateCurrentBooking(todaysDate) {
     let createdBookings = []
     const userBookings = this.bookings.getUserBookings(this.id)
+
     const compareDates = userBookings.filter((booking) => {
       return booking.date === todaysDate
     });
@@ -20,25 +20,24 @@ class User {
 
     console.log(compareDates, 'current book');
 
-    const pushBookings = compareDates.forEach((booking)=>{
-      const pushRooms = bookingRooms.forEach((room)=>{
-          const createBooking = {
-            bookingID: booking.id,
-            userId: booking.userID,
-            date: booking.date,
-            roomNumber: room.number,
-            roomType: room.roomType,
-            bidet: room.bidet,
-            bedSize: room.bedSize,
-            numBeds: room.numBeds,
-            Cost: room.costPerNight
-        }
-        createdBookings.push(createBooking)
+    const pushBookings = compareDates.forEach((booking) => {
+      const room = bookingRooms.find((room) => {
+        return booking.roomNumber === room.number
       })
+      const createBooking = {
+        id: booking.id,
+        userId: booking.userID,
+        date: booking.date,
+        roomNumber: room.number,
+        roomType: room.roomType,
+        bidet: room.bidet,
+        bedSize: room.bedSize,
+        numBeds: room.numBeds,
+        Cost: room.costPerNight
+      }
+      createdBookings.push(createBooking)
     })
-    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber,booking])).values(),];
-
-    return filteredWithoutDuplicates;
+    return createdBookings
   }
 
   calculatePastBooking(todaysDate) {
@@ -58,9 +57,11 @@ class User {
     console.log(compareDates, 'past book');
 
     const pushBookings = compareDates.forEach((booking) => {
-      const pushRooms = bookingRooms.forEach((room) => {
-        const createBooking = {
-          bookingID: booking.id,
+      const room = bookingRooms.find((room) => {
+        return booking.roomNumber === room.number
+      })
+      const createBooking = {
+          id: booking.id,
           userId: booking.userID,
           date: booking.date,
           roomNumber: room.number,
@@ -70,15 +71,10 @@ class User {
           numBeds: room.numBeds,
           Cost: room.costPerNight
         }
-        createdBookings.push(createBooking)
-      })
+      createdBookings.push(createBooking)
     })
 
-    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber, booking])).values(),];
-    
-    return filteredWithoutDuplicates;
-    
-  
+    return createdBookings
   }
 
   calculateFutureBooking(todaysDate) {
@@ -96,26 +92,26 @@ class User {
       return this.bookings.getBookingRoom(booking.id)
     })
 
-    console.log(compareDates, 'future book');
+    console.log(compareDates, `future book`);
     const pushBookings = compareDates.forEach((booking) => {
-      const pushRooms = bookingRooms.forEach((room) => {
-        const createBooking = {
-          bookingID: booking.id,
-          userId: booking.userID,
-          date: booking.date,
-          roomNumber: room.number,
-          roomType: room.roomType,
-          bidet: room.bidet,
-          bedSize: room.bedSize,
-          numBeds: room.numBeds,
-          Cost: room.costPerNight
-        }
-        createdBookings.push(createBooking)
+      const room = bookingRooms.find((room) => {
+        return booking.roomNumber === room.number
       })
+      const createBooking = {
+        id: booking.id,
+        userId: booking.userID,
+        date: booking.date,
+        roomNumber: room.number,
+        roomType: room.roomType,
+        bidet: room.bidet,
+        bedSize: room.bedSize,
+        numBeds: room.numBeds,
+        Cost: room.costPerNight
+      }
+      createdBookings.push(createBooking)
     })
-    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber, booking])).values(),];
-    console.log(filteredWithoutDuplicates, 'filter');
-    return filteredWithoutDuplicates;
+
+    return createdBookings
   }
 
   calculateTotalCost() {
@@ -138,29 +134,24 @@ class User {
       return this.bookings.getBookingRoom(booking.id)
     })
     const pushBookings = userBookings.forEach((booking) => {
-      const pushRooms = bookingRooms.forEach((room) => {
-        const createBooking = {
-          bookingID: booking.id,
-          userId: booking.userID,
-          date: booking.date,
-          roomNumber: room.number,
-          roomType: room.roomType,
-          bidet: room.bidet,
-          bedSize: room.bedSize,
-          numBeds: room.numBeds,
-          Cost: room.costPerNight
-        }
-        createdBookings.push(createBooking)
+      const room = bookingRooms.find((room) => {
+        return booking.roomNumber === room.number
       })
+      const createBooking = {
+        id: booking.id,
+        userId: booking.userID,
+        date: booking.date,
+        roomNumber: room.number,
+        roomType: room.roomType,
+        bidet: room.bidet,
+        bedSize: room.bedSize,
+        numBeds: room.numBeds,
+        Cost: room.costPerNight
+      }
+      createdBookings.push(createBooking)
     })
-    const filteredWithoutDuplicates = [...new Map(createdBookings.map((booking) => [booking.roomNumber, booking])).values(),];
-    console.log(filteredWithoutDuplicates);
-    return filteredWithoutDuplicates;
+    return createdBookings
   }
-
-  
-  
-  
 }
 
 module.exports = User;
