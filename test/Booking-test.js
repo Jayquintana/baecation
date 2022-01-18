@@ -64,7 +64,7 @@ const booking = new Booking(bookings, rooms)
     )
   })
 
-  it.only('should show available rooms', () => {
+  it('should show available rooms', () => {
     expect(booking.availableRooms('2022/01/17')).to.deep.equal(
       [
         {
@@ -221,5 +221,9 @@ const booking = new Booking(bookings, rooms)
         }
       ]
     )
+  })
+
+  it('should filter by room type', () => {
+    
   })
 })

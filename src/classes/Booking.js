@@ -23,6 +23,8 @@ class Booking {
   availableRooms(date) {
     const availableRooms = [];
     const findBookings = this.bookingData.filter((booking) => {
+      // console.log(booking.date);
+      // console.log(date, 'date');
       return booking.date === date
     })
     const findRooms = findBookings.map((booking) => {
@@ -32,7 +34,6 @@ class Booking {
     console.log();
     return filter
   }
-
   
 }
 
