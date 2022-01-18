@@ -10,7 +10,7 @@
   <body>
     <nav class="head-navigation">
       <div class="user-info-section">
-        <h3 class="hello-user-title">Hello user1221</h3>
+        <h3 class="hello-user-title"></h3>
         <button class="go-back-button hidden">Back To Main</button>
       </div> 
       <div class="nav-buttons">
@@ -26,6 +26,31 @@
         <h1 class="page-title">Book With Baecation!</h1>
       </div>
       <section class="bookings-section">
+      </section>
+      <section class="date-selection-section">
+        <article class="select-date-box">
+          <h1 class="start-booking"> Start Booking, Select A Date:</h1>
+          <div class="date-input-box">
+            <input class="date-input" type="date" name="start" value="2022-01-17" min="2021/01/1" max="2022-12-31"> 
+          </div>
+        </article>
+        <article class="filter-tags hidden">
+          <h2 class="tags-title">Filter Room Type:</h2>
+          <div class="filter-buttons">
+            <input class="checkbox" type="radio" id='suite' name='tag'>
+            <label for='appetizer'>Suit</label>
+            <input class="checkbox" type="radio" id='single room' name='tag'>
+            <label for='appetizer'>Single Room</label>
+            <input class="checkbox" type="radio" id='junior suite' name='tag'>
+            <label for='appetizer'>Junior Suit</label>
+            <input class="checkbox" type="radio" id='residential suite' name='tag'>
+            <label for='appetizer'>Residential Suit</label>
+            <input  type="radio" id='allRooms' name='tag'>
+            <label for='appetizer'>All Rooms</label>
+          </div>
+        </article>
+        <div class="available-rooms">
+        </div>
       </section>
     </main>
     <script src="bundle.js"></script>

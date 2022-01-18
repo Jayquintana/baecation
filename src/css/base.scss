@@ -6,11 +6,11 @@
 @import '_variables';
 
 // * {
-//   border: 2px solid black;
+  // border: 2px solid black;
 // }
 
 body {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -20,24 +20,39 @@ main {
   width: 100vw;
 }
 
+html {
+  width: 100%;
+  height: 100%;
+}
+
 th {
 text-align: left;
 }
 
-.hidden {
-  display: none;
+label {
+  margin-right: 2%;
 }
+
+
 
 // head nav ---------------------------
 .head-navigation {
   display: flex;
   border: 1px black;
   background-color: #455767;
+    margin-top: -2vh;
+    margin-left: -1%;
 }
 
 .user-info-section {
   width: 20vw;
 }
+.hello-user-title {
+  font-family: $regular-font;
+  color: white;
+  margin-left: 10%;
+}
+
 
 .nav-buttons {
   display: flex;
@@ -64,6 +79,8 @@ text-align: left;
 .go-back-button {
     background: transparent;
     color: white;
+    font-family: $regular-font;
+    margin-left: 5%;
 }
 
 // main section --------------------
@@ -76,8 +93,49 @@ text-align: left;
   justify-content: center;
   font-family: $rock-lobster;
 }
+.start-booking {
+  font-family: $regular-font;
+}
 
+.select-date-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10%;
+}
+.date-input-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.date-input, 
+.date-input-box {
+  width: 50%;
+}
 
+.available-rooms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filter-tags {
+  display: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -9%;
+  margin-bottom: 2%;
+}
+
+.filter-buttons {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 
 // booking section 
 .bookings-section {
@@ -90,9 +148,16 @@ text-align: left;
   width: 70%;
   background-color:$darker-blue;
   margin-bottom: 3%;
+}
 
+.tags-title {
+  font-family: $regular-font;
 }
 
 th, td {
   background-color: white;
+}
+
+.hidden {
+  display: none;
 }
