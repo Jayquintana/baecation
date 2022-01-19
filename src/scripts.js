@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 
 
 // navigation section 
+const headNav = document.querySelector('.head-navigation');
 const navButtonsBox = document.querySelector('.nav-buttons');
 const userTitle = document.querySelector('.hello-user-title');
 const currentPageTitle = document.querySelector('.current-page-title');
@@ -27,37 +28,35 @@ const dateSelectionsection = document.querySelector('.date-selection-section');
 const availableRooms = document.querySelector('.available-rooms');
 const selectDateTitle = document.querySelector('.start-booking');
 const filterTags = document.querySelector('.filter-tags');
-const checkboxes = document.querySelectorAll('.checkbox')
-const filterTagstitle = document.querySelector('.tags-title')
-const allRoomsRadioButton = document.querySelector('#allRooms')
-const loadingbar = document.querySelector('.loading')
-const dateSelectionBox = document.querySelector('.select-date-box')
-const tagsBox = document.querySelector('.filter-buttons')
-const backToMainButton = document.querySelector('.back-to-main')
+const checkboxes = document.querySelectorAll('.checkbox');
+const filterTagstitle = document.querySelector('.tags-title');
+const allRoomsRadioButton = document.querySelector('#allRooms');
+const loadingbar = document.querySelector('.loading');
+const dateSelectionBox = document.querySelector('.select-date-box');
+const tagsBox = document.querySelector('.filter-buttons');
+const backToMainButton = document.querySelector('.back-to-main');
+
+//login
+const loginButton = document.querySelector('#login-form-submit');
+const loginForm = document.querySelector('.login-form');
+const loginError = document.querySelector('.login-error-msg-holder');
+const logInheader = document.querySelector('.login-header');
+const loginPage = document.querySelector('.login-page');
 
 //global vaiables 
-let currentUser;
+let customers;
 let bookings; 
-let users;
 let selectedDate;
-
-
+let currentUser;
 
 //promise and api related 
 Promise.all([customerData, roomData, bookingData])
 .then((data) => {
-  console.log(data[2].bookings[data[2].bookings.length -1]);
   bookings = new Booking(data[2].bookings, data[1].rooms)
-  users = data[0].customers.map((customer) => {
-    return new User(customer.id, customer.name, bookings)
-  })
-  currentUser = users[Math.floor(Math.random() * users.length)];
-  displayUserName()
+  customers = data[0].customers
   dateInput.min = dayjs().format('YYYY-MM-DD')
   filterCheckBoxes()
 })
-
-
 
 //reausable functions 
 const hide = (element) => {
@@ -70,7 +69,7 @@ const show = (element) => {
 
 const changeText = (element, text) => {
   element.innerText = text
-}
+};
 //event handlers
 const displayUserName = () => {
   userTitle.innerText = `Welcome! ${currentUser.name}`
@@ -201,7 +200,7 @@ const displayBookingDates = () => {
         show(goBackButton)
         show(filterTags)
         show(tagsBox)
-        // show()
+        show(filterTagstitle)
         availableRooms.innerHTML += `
     <table class="booking-table">
             <tr>
@@ -226,7 +225,7 @@ const displayBookingDates = () => {
     `
       })
     } else {
-    changeText(selectDateTitle, `Sorry, No Rooms Available`)
+    changeText(selectDateTitle, `We apologize for the inconvenience, No rooms available`)
       show(goBackButton)
     }
 }
@@ -264,7 +263,7 @@ const filterCheckBoxes = () => {
 
       } else {
         availableRooms.innerHTML = ''
-        changeText(filterTagstitle, 'Sorry No Rooms Available')
+        changeText(filterTagstitle, 'We apologize for the inconvenience, No rooms available')
 
       }
     })
@@ -329,8 +328,39 @@ const fetchData = () => {
     })
 }
 
+const checkLogIn = (event) => {
+  event.preventDefault()
+  const userName = loginForm.username.value;
+  const password = loginForm.password.value;
+  const userNumber = parseInt(userName.replace(/[^0-9]/g, ''), 10)
 
+  if(userName === `customer${userNumber}`) {
+  const customer = customers.find((customer) => {
+    return customer.id === userNumber
+  })
+  currentUser = new User(customer.id, customer.name, bookings)
+  displayUserName()
+} else {
+    show(loginError)
+    setTimeout(() => {
+      hide(loginError)
+    }, 2000)
+}
 
+  if (password === 'overlook2021') {
+    show(headNav)
+    show(mainPage)
+    hide(loginPage)
+  } else {
+    hide(logInheader)
+    show(loginError)
+
+    setTimeout(() => {
+      hide(loginError)
+      show(logInheader)
+    }, 2000);
+  }
+}
 
 
 //event listeners 
@@ -343,8 +373,10 @@ expenseTrackingButton.addEventListener('click', displayTotalCost)
 dateInput.addEventListener('change', displayBookingDates);
 availableRooms.addEventListener('click', postBookings)
 backToMainButton.addEventListener('click', backToMain)
+loginButton.addEventListener('click', function (event) {
+  checkLogIn(event)
+})
 allRoomsRadioButton.addEventListener('change', function() {
   changeText(filterTagstitle, 'All Rooms')
   displayBookingDates()
-  
 })
