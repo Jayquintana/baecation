@@ -1,13 +1,5 @@
-/* This is an example of how to import a partial scss file*/
 
-//fonts 
-// font-family: 'Lobster', cursive;
-// font-family: 'Open Sans', sans-serif;
 @import '_variables';
-
-// * {
-  // border: 2px solid black;
-// }
 
 body {
   height: 100%;
@@ -39,9 +31,6 @@ input {
   cursor: pointer;
 }
 
-
-
-
 // head nav ---------------------------
 .head-navigation {
   display: flex;
@@ -59,7 +48,6 @@ input {
   color: white;
   margin-left: 10%;
 }
-
 
 .nav-buttons {
   display: flex;

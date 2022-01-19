@@ -52,7 +52,6 @@ class User {
       return this.bookings.getBookingRoom(booking.id)
     })
 
-
     const pushBookings = compareDates.forEach((booking) => {
       const room = bookingRooms.find((room) => {
         return booking.roomNumber === room.number
@@ -146,7 +145,6 @@ class User {
     })
     return createdBookings
   }
-
 }
 
 module.exports = User;

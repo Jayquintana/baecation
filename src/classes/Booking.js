@@ -21,18 +21,19 @@ class Booking {
   }
 
   availableRooms(date) {
-    const availableRooms = [];
+    let counter = 1;
     const findBookings = this.bookingData.filter((booking) => {
       return booking.date === date
     })
     const findRooms = findBookings.map((booking) => {
       return this.getBookingRoom(booking.id)
     })
+
     const filter = this.roomData.filter((allRoom) => !findRooms.find(room => allRoom.number === room.number))
     return filter
   }
 
-  createNewBooking(roomNumber, customerId, date) {
+  createPostBooking(roomNumber, customerId, date) {
     let serialNumber = Math.random().toString(36).substr(2, 9);
     const createNewBooking = {
       id: serialNumber,
@@ -43,7 +44,6 @@ class Booking {
     }
     return createNewBooking
   }
-  
 }
 
 module.exports = Booking;
