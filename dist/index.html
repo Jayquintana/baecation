@@ -7,19 +7,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <title>Baecation! Your number one hotel getaway/</title>
+  </head>
   <body>
     <nav class="head-navigation">
-      <div class="user-info-section">
+      <article class="user-info-section">
         <h3 class="hello-user-title"></h3>
         <button class="go-back-button hidden">Back To Main</button>
-      </div> 
-      <div class="nav-buttons">
+      </article> 
+      <section class="nav-buttons">
         <button class="check-bookings-button">Check Bookings</button>
         <button class="expense-tracking-button">Expense Tracking</button>
         <button class="past-bookings hidden">Past Bookings</button>
         <button class="current-bookings hidden">Current Bookings</button>
         <button class="future-bookings hidden">Upcoming Bookings</button>
-      </div>
+      </section>
     </nav>
     <main class="main-section">
       <div class="page-title-box">
@@ -27,27 +29,27 @@
       </div>
       <section class="bookings-section">
       </section>
-        <button class="back-to-main hidden">Go Back To Bookings!</button>
+      <button class="back-to-main hidden">Go Back To Bookings!</button>
       <section class="date-selection-section">
         <article class="select-date-box">
-          <h1 class="start-booking"> Start Booking, Select A Date:</h1>
           <div class="date-input-box">
-            <input class="date-input" type="date" name="start" value="2022-01-17" min="2021/01/1" max="2022-12-31"> 
+            <label class="start-booking" for='datePicker'>Start Booking, Select A Date:</label>
+            <input id="datePicker" class="date-input" type="date" name="start" value="2022-01-17" min="2021/01/1" max="2022-12-31"> 
           </div>
         </article>
         <article class="filter-tags hidden">
           <h2 class="tags-title">Filter Room Type:</h2>
           <div class="filter-buttons">
             <input class="checkbox" type="radio" id='suite' name='tag'>
-            <label for='appetizer'>Suit</label>
+            <label for='suite'>Suit</label>
             <input class="checkbox" type="radio" id='single room' name='tag'>
-            <label for='appetizer'>Single Room</label>
+            <label for='single room'>Single Room</label>
             <input class="checkbox" type="radio" id='junior suite' name='tag'>
-            <label for='appetizer'>Junior Suit</label>
+            <label for='junior suite'>Junior Suit</label>
             <input class="checkbox" type="radio" id='residential suite' name='tag'>
-            <label for='appetizer'>Residential Suit</label>
+            <label for='residential suite'>Residential Suit</label>
             <input  type="radio" id='allRooms' name='tag'>
-            <label for='appetizer'>All Rooms</label>
+            <label for='allRooms'>All Rooms</label>
           </div>
         </article>
         <div class="loading hidden">
@@ -55,8 +57,8 @@
           <div class="divTwo"></div>
           <div class="divThree"></div>
         </div>
-        <div class="available-rooms">
-        </div>
+        <section class="available-rooms">
+        </section>
       </section>
     </main>
     <script src="bundle.js"></script>
