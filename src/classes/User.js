@@ -18,8 +18,6 @@ class User {
       return this.bookings.getBookingRoom(booking.id)
     })
 
-    console.log(compareDates, 'current book');
-
     const pushBookings = compareDates.forEach((booking) => {
       const room = bookingRooms.find((room) => {
         return booking.roomNumber === room.number
@@ -54,7 +52,6 @@ class User {
       return this.bookings.getBookingRoom(booking.id)
     })
 
-    console.log(compareDates, 'past book');
 
     const pushBookings = compareDates.forEach((booking) => {
       const room = bookingRooms.find((room) => {
@@ -73,7 +70,6 @@ class User {
         }
       createdBookings.push(createBooking)
     })
-
     return createdBookings
   }
 
@@ -92,7 +88,6 @@ class User {
       return this.bookings.getBookingRoom(booking.id)
     })
 
-    console.log(compareDates, `future book`);
     const pushBookings = compareDates.forEach((booking) => {
       const room = bookingRooms.find((room) => {
         return booking.roomNumber === room.number
@@ -110,7 +105,6 @@ class User {
       }
       createdBookings.push(createBooking)
     })
-
     return createdBookings
   }
 
