@@ -209,6 +209,35 @@ th, td {
   }
 }
 
+// login page
+.login-page {
+  background-color: $darker-blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 30%;
+  width: 40%;
+  margin-left: 30%;
+  margin-top: 12%;
+  border-radius: 25px;
+}
+
+.login-header {
+  font-family: $regular-font;
+  align-items: flex-start;
+  color: white;
+}
+
+.login-title {
+  width: 100vw;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  font-family: $rock-lobster;
+  color: wheat;
+}
+
 .hidden {
   display: none;
 }

@@ -10,7 +10,19 @@
     <title>Baecation! Your number one hotel getaway/</title>
   </head>
   <body>
-    <nav class="head-navigation">
+    <section class="login-page">
+      <h1 class="login-title">Welcome to Baecation!</h1>
+      <h3 class="login-header">Login</h3>
+      <div class="login-error-msg-holder hidden">
+        <p class="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+      </div>
+      <form class="login-form">
+        <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
+        <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+        <button id="login-form-submit">login</button>
+      </form>
+    </section>
+    <nav class="head-navigation hidden">
       <article class="user-info-section">
         <h3 class="hello-user-title"></h3>
         <button class="go-back-button hidden">Back To Main</button>
@@ -23,7 +35,7 @@
         <button class="future-bookings hidden">Upcoming Bookings</button>
       </section>
     </nav>
-    <main class="main-section">
+    <main class="main-section hidden">
       <div class="page-title-box">
         <h1 class="page-title">Book With Baecation!</h1>
       </div>

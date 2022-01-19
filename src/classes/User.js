@@ -146,6 +146,7 @@ class User {
     })
     return createdBookings
   }
+
 }
 
 module.exports = User;
