@@ -21,13 +21,14 @@ class Booking {
   }
 
   availableRooms(date) {
-    const availableRooms = [];
+    let counter = 1;
     const findBookings = this.bookingData.filter((booking) => {
       return booking.date === date
     })
     const findRooms = findBookings.map((booking) => {
       return this.getBookingRoom(booking.id)
     })
+
     const filter = this.roomData.filter((allRoom) => !findRooms.find(room => allRoom.number === room.number))
     return filter
   }

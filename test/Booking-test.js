@@ -39,7 +39,7 @@ const booking = new Booking(bookings, rooms)
     )
   })
 
-  it('should be able to grab all of the users rooms', () => {
+  it('should be able to grab all of the users rooms by their id', () => {
     expect(booking.getUserBookings(9)[0]).to.deep.equal(
       {
         id: '5fwrgu4i7k55hl6sz',
@@ -51,7 +51,11 @@ const booking = new Booking(bookings, rooms)
     )
   })
 
-  it('should grab a booking room info', () => {
+  it('should be undefined if passed in non existing user', () => {
+    expect(booking.getUserBookings(55)[0]).to.deep.equal(undefined)
+  })
+
+  it('should grab a booking room info based off of booking id', () => {
     expect(booking.getBookingRoom("5fwrgu4i7k55hl6sz")).to.deep.equal(
       {
         number: 15,
@@ -62,6 +66,9 @@ const booking = new Booking(bookings, rooms)
         costPerNight: 294.56
       }
     )
+  })
+  it('should fail if no booking id provided', () => {
+    expect(booking.getBookingRoom()).to.deep.equal()
   })
 
   it('should show available rooms', () => {
@@ -222,16 +229,7 @@ const booking = new Booking(bookings, rooms)
       ]
     )
   })
-
   it('should create a booking based off a room', () => {
-    expect(booking.createNewBooking(2, 25 ,"2022/01/24" )).to.equal(
-      {
-        id: 'bfs3zguqq',
-        userID: 25,
-        date: '2022/01/24',
-        roomNumber: 2,
-        roomServiceCharges: []
-      }
-    )
+    expect(booking.createNewBooking(2, 25 ,"2022/01/24" ).userID).to.equal(25)
   })
 })

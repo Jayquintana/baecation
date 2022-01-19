@@ -59,6 +59,11 @@ describe('User', () => {
     )
   })
 
+  it('should be an empty array if no date provided', () => {
+    expect(users[39].calculateCurrentBooking('')).to.deep.equal([])
+  })
+
+
   it('should show the users past bookings', () => {
     expect(users[10].calculatePastBooking('2022/01/14')).to.deep.equal(
       [

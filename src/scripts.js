@@ -333,33 +333,22 @@ const checkLogIn = (event) => {
   const userName = loginForm.username.value;
   const password = loginForm.password.value;
   const userNumber = parseInt(userName.replace(/[^0-9]/g, ''), 10)
-
-  if(userName === `customer${userNumber}`) {
+console.log(userName);
+  if (userName === `customer${userNumber}` && password === 'overlook2021') {
   const customer = customers.find((customer) => {
     return customer.id === userNumber
   })
   currentUser = new User(customer.id, customer.name, bookings)
   displayUserName()
+    show(headNav)
+    show(mainPage)
+    hide(loginPage)
 } else {
     show(loginError)
     setTimeout(() => {
       hide(loginError)
     }, 2000)
-}
-
-  if (password === 'overlook2021') {
-    show(headNav)
-    show(mainPage)
-    hide(loginPage)
-  } else {
-    hide(logInheader)
-    show(loginError)
-
-    setTimeout(() => {
-      hide(loginError)
-      show(logInheader)
-    }, 2000);
-  }
+  } 
 }
 
 
