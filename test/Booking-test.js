@@ -223,7 +223,15 @@ const booking = new Booking(bookings, rooms)
     )
   })
 
-  it('should filter by room type', () => {
-    
+  it('should create a booking based off a room', () => {
+    expect(booking.createNewBooking(2, 25 ,"2022/01/24" )).to.equal(
+      {
+        id: 'bfs3zguqq',
+        userID: 25,
+        date: '2022/01/24',
+        roomNumber: 2,
+        roomServiceCharges: []
+      }
+    )
   })
 })

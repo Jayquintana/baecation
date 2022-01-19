@@ -23,16 +23,25 @@ class Booking {
   availableRooms(date) {
     const availableRooms = [];
     const findBookings = this.bookingData.filter((booking) => {
-      // console.log(booking.date);
-      // console.log(date, 'date');
       return booking.date === date
     })
     const findRooms = findBookings.map((booking) => {
       return this.getBookingRoom(booking.id)
     })
     const filter = this.roomData.filter((allRoom) => !findRooms.find(room => allRoom.number === room.number))
-    console.log();
     return filter
+  }
+
+  createNewBooking(roomNumber, customerId, date) {
+    let serialNumber = Math.random().toString(36).substr(2, 9);
+    const createNewBooking = {
+      id: serialNumber,
+      userID: customerId,
+      date: date,
+      roomNumber: roomNumber,
+      roomServiceCharges: []
+    }
+    return createNewBooking
   }
   
 }

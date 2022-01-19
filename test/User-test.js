@@ -34,7 +34,7 @@ describe('User', () => {
     expect(users[39].calculateCurrentBooking('2022/01/14')).to.deep.equal(
       [
         {
-          bookingID: '5fwrgu4i7k55hl6z1',
+          id: '5fwrgu4i7k55hl6uc',
           userId: 40,
           date: '2022/01/14',
           roomNumber: 22,
@@ -45,7 +45,7 @@ describe('User', () => {
           Cost: 350.31
         },
         {
-          bookingID: '5fwrgu4i7k55hl6z1',
+          id: '5fwrgu4i7k55hl6z1',
           userId: 40,
           date: '2022/01/14',
           roomNumber: 24,
@@ -63,7 +63,7 @@ describe('User', () => {
     expect(users[10].calculatePastBooking('2022/01/14')).to.deep.equal(
       [
         {
-          bookingID: '5fwrgu4i7k55hl6wj',
+          id: '5fwrgu4i7k55hl6wj',
           userId: 11,
           date: '2022/01/12',
           roomNumber: 15,
@@ -83,9 +83,9 @@ describe('User', () => {
     expect(users[2].calculateFutureBooking('2022/01/14')).to.deep.equal(
       [
         {
-          bookingID: '5fwrgu4i7k55hl6zn',
+          id: '5fwrgu4i7k55hl6v3',
           userId: 3,
-          date: '2022/01/27',
+          date: '2022/02/07',
           roomNumber: 23,
           roomType: 'residential suite',
           bidet: false,
@@ -94,7 +94,7 @@ describe('User', () => {
           Cost: 176.36
         },
         {
-          bookingID: '5fwrgu4i7k55hl6zn',
+          id: '5fwrgu4i7k55hl6zn',
           userId: 3,
           date: '2022/01/27',
           roomNumber: 14,
@@ -109,7 +109,46 @@ describe('User', () => {
   })
 
   it('should calculate the total cost',() => {
-    expect(users[2].calculateTotalCost()).to.equal(896)
+    expect(users[2].calculateTotalCost()).to.equal('896')
   })
 
+  it('it should calculate all users bookings', () => {
+    expect(users[2].calculateAllUsersBookings()).to.deep.equal(
+      [
+        {
+          id: '5fwrgu4i7k55hl6tl',
+          userId: 3,
+          date: '2022/01/10',
+          roomNumber: 8,
+          roomType: 'junior suite',
+          bidet: false,
+          bedSize: 'king',
+          numBeds: 1,
+          Cost: 261.26
+        },
+        {
+          id: '5fwrgu4i7k55hl6v3',
+          userId: 3,
+          date: '2022/02/07',
+          roomNumber: 23,
+          roomType: 'residential suite',
+          bidet: false,
+          bedSize: 'queen',
+          numBeds: 2,
+          Cost: 176.36
+        },
+        {
+          id: '5fwrgu4i7k55hl6zn',
+          userId: 3,
+          date: '2022/01/27',
+          roomNumber: 14,
+          roomType: 'residential suite',
+          bidet: false,
+          bedSize: 'twin',
+          numBeds: 1,
+          Cost: 457.88
+        }
+      ]
+    )
+  })
 })
