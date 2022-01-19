@@ -98,11 +98,13 @@ const backToMain = () => {
   domUpdates.show(dateInput)
   domUpdates.show(dateSelectionBox)
   domUpdates.show(filterTags)
+  domUpdates.hide(backToMainButton)
 }
 
 const checkCurrentBookings = () => {
   bookingSection.innerHTML = ''
   domUpdates.hide(dateSelectionsection)
+  domUpdates.hide(backToMainButton)
   domUpdates.hide(dateSelectionBox)
   domUpdates.hide(filterTags)
   domUpdates.hide(expenseTrackingButton)
@@ -149,6 +151,7 @@ const checkFutureBookings = () => {
 
 const displayTotalCost = () => {
   bookingSection.innerHTML = ''
+  domUpdates.hide(backToMainButton)
   domUpdates.hide(expenseTrackingButton)
   domUpdates.hide(checkBookingsButton)
   domUpdates.hide(dateSelectionsection)
