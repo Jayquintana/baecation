@@ -3,40 +3,42 @@ import './css/base.scss';
 import Booking from '../src/classes/Booking.js';
 import User from '../src/classes/User.js';
 import { customerData, roomData, bookingData} from './apiCalls';
+import domUpdates from './domUpdates';
 import dayjs from 'dayjs';
 
 
-// navigation section 
+// navigation section ----------
 const headNav = document.querySelector('.head-navigation');
-const navButtonsBox = document.querySelector('.nav-buttons');
 const userTitle = document.querySelector('.hello-user-title');
-const currentPageTitle = document.querySelector('.current-page-title');
+const goBackButton = document.querySelector('.go-back-button');
 const checkBookingsButton = document.querySelector('.check-bookings-button');
 const expenseTrackingButton = document.querySelector('.expense-tracking-button');
-const goBackButton = document.querySelector('.go-back-button');
 const currentBookingButton = document.querySelector('.current-bookings');
 const pastBookingButton = document.querySelector('.past-bookings');
 const futureBookingButton = document.querySelector('.future-bookings');
 
-//main section 
-const pageTitle = document.querySelector('.page-title');
+
+//main section -----------
+//sections and articles
 const bookingSection = document.querySelector('.bookings-section');
-const mainPage = document.querySelector('.main-section');
-const dateInput = document.querySelector('.date-input');
-const dateInputButton = document.querySelector('.date-input-button');
 const dateSelectionsection = document.querySelector('.date-selection-section');
 const availableRooms = document.querySelector('.available-rooms');
-const selectDateTitle = document.querySelector('.start-booking');
+const mainPage = document.querySelector('.main-section');
 const filterTags = document.querySelector('.filter-tags');
+const dateSelectionBox = document.querySelector('.select-date-box');
+//Buttons
+const backToMainButton = document.querySelector('.back-to-main');
+const tagsBox = document.querySelector('.filter-buttons');
+const allRoomsRadioButton = document.querySelector('#allRooms');
+//Titles and inputs
+const pageTitle = document.querySelector('.page-title');
+const dateInput = document.querySelector('.date-input');
+const selectDateTitle = document.querySelector('.start-booking');
 const checkboxes = document.querySelectorAll('.checkbox');
 const filterTagstitle = document.querySelector('.tags-title');
-const allRoomsRadioButton = document.querySelector('#allRooms');
 const loadingbar = document.querySelector('.loading');
-const dateSelectionBox = document.querySelector('.select-date-box');
-const tagsBox = document.querySelector('.filter-buttons');
-const backToMainButton = document.querySelector('.back-to-main');
 
-//login
+//login --------------
 const loginButton = document.querySelector('#login-form-submit');
 const loginForm = document.querySelector('.login-form');
 const loginError = document.querySelector('.login-error-msg-holder');
@@ -58,22 +60,8 @@ Promise.all([customerData, roomData, bookingData])
   filterCheckBoxes()
 })
 
-//reausable functions 
-const hide = (element) => {
-  element.classList.add("hidden");
-};
 
-const show = (element) => {
-  element.classList.remove("hidden");
-};
-
-const changeText = (element, text) => {
-  element.innerText = text
-};
 //event handlers
-const displayUserName = () => {
-  userTitle.innerText = `Welcome! ${currentUser.name}`
-}
 const createTodaysDate = () => {
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
@@ -85,106 +73,89 @@ const createTodaysDate = () => {
   return today
 }
 
+const uncheckRadioButtons = () => {
+  checkboxes.forEach((tag) => {
+    tag.checked = false
+  })
+}
+
 const backToMain = () => {
   bookingSection.innerHTML = ''
   availableRooms.innerHTML = ''
-  changeText(pageTitle, 'Book With baecation')
-  changeText(selectDateTitle, 'Start Booking, Select A Date:')
-  hide(currentBookingButton)
-  hide(pastBookingButton)
-  hide(futureBookingButton)
-  show(expenseTrackingButton)
-  show(checkBookingsButton)
-  hide(goBackButton)
-  show(dateSelectionsection)
-  show(dateInput)
-  show(dateSelectionBox)
-  show(filterTags)
-  hide(tagsBox)
-  hide(filterTagstitle)
-  hide(backToMainButton)
-}
-
-const createBookings = (booking) => {
-    bookingSection.innerHTML += `
-        <table class="booking-table">
-          <tr>
-            <th>Date:</th>
-            <th>Room Number:</th>
-            <th>Room Type:</th>
-            <th>Bidet:</th>
-            <th>Bed Size:</th>
-            <th>Number of beds</th>
-            <th>Price Per night:</th>
-          </tr>
-          <tr>
-            <td>${booking.date}</td>
-            <td>${booking.roomNumber}</td>
-            <td>${booking.roomType}</td>
-            <td>${booking.bidet}</td>
-            <td>${booking.bedSize}</td>
-            <td>${booking.numBeds}</td>
-            <td>${booking.Cost}</td>
-          </tr>
-        </table>`
+  domUpdates.changeText(pageTitle, 'Book With baecation')
+  domUpdates.changeText(selectDateTitle, 'Start Booking, Select A Date:')
+  uncheckRadioButtons()
+  domUpdates.hide(currentBookingButton)
+  domUpdates.hide(pastBookingButton)
+  domUpdates.hide(futureBookingButton)
+  domUpdates.hide(goBackButton)
+  domUpdates.hide(tagsBox)
+  domUpdates.hide(backToMainButton)
+  domUpdates.hide(filterTagstitle)
+  domUpdates.show(expenseTrackingButton)
+  domUpdates.show(checkBookingsButton)
+  domUpdates.show(dateSelectionsection)
+  domUpdates.show(dateInput)
+  domUpdates.show(dateSelectionBox)
+  domUpdates.show(filterTags)
 }
 
 const checkCurrentBookings = () => {
   bookingSection.innerHTML = ''
-  hide(dateSelectionBox)
-  hide(filterTags)
-  hide(expenseTrackingButton)
-  hide(checkBookingsButton)
-  show(goBackButton)
-  show(currentBookingButton)
-  show(pastBookingButton)
-  show(futureBookingButton)
-  changeText(pageTitle, 'Current Bookings')
+  domUpdates.hide(dateSelectionBox)
+  domUpdates.hide(filterTags)
+  domUpdates.hide(expenseTrackingButton)
+  domUpdates.hide(checkBookingsButton)
+  domUpdates.show(goBackButton)
+  domUpdates.show(currentBookingButton)
+  domUpdates.show(pastBookingButton)
+  domUpdates.show(futureBookingButton)
+  domUpdates.changeText(pageTitle, 'Current Bookings')
   if (currentUser.calculateCurrentBooking(createTodaysDate()).length) { 
       const displayBooking = currentUser.calculateCurrentBooking(createTodaysDate()).map((booking) => {
-        createBookings(booking)
+        domUpdates.createBookings(bookingSection, booking)
     })
     return displayBooking
   } else {
-    changeText(pageTitle, ' 0 Current Bookings Found')
+    domUpdates.changeText(pageTitle, ' 0 Current Bookings Found')
   }
 
 }
 
 const checkPastBookings = () => {
   bookingSection.innerHTML = ''
-  changeText(pageTitle, 'Past Bookings')
+  domUpdates.changeText(pageTitle, 'Past Bookings')
   if (currentUser.calculatePastBooking(createTodaysDate()).length) {
     const displayBooking = currentUser.calculatePastBooking(createTodaysDate()).map((booking) => {
-      createBookings(booking)
+      domUpdates.createBookings(bookingSection, booking)
     })
   } else {
-    changeText(pageTitle, ' 0 Past Bookings Found')
+    domUpdates.changeText(pageTitle, ' 0 Past Bookings Found')
   }
 }
 
 const checkFutureBookings = () => {
   bookingSection.innerHTML = ''
-  changeText(pageTitle, 'Upcoming Bookings')
+  domUpdates.changeText(pageTitle, 'Upcoming Bookings')
   if (currentUser.calculateFutureBooking(createTodaysDate()).length) {
     const displayBooking = currentUser.calculateFutureBooking(createTodaysDate()).map((booking) => {
-      createBookings(booking)
+      domUpdates.createBookings(bookingSection, booking)
     })
   } else {
-    changeText(pageTitle, ' 0 Upcoming Bookings Found')
+    domUpdates.changeText(pageTitle, ' 0 Upcoming Bookings Found')
   }
 }
 
 const displayTotalCost = () => {
   bookingSection.innerHTML = ''
-  hide(expenseTrackingButton)
-  hide(checkBookingsButton)
-  hide(dateSelectionsection)
-  show(goBackButton)
-  changeText(pageTitle, `Total Spent At Baecation: $ ${currentUser.calculateTotalCost()} Dollars`)
+  domUpdates.hide(expenseTrackingButton)
+  domUpdates.hide(checkBookingsButton)
+  domUpdates.hide(dateSelectionsection)
+  domUpdates.show(goBackButton)
+  domUpdates.changeText(pageTitle, `Total Spent At Baecation: $ ${currentUser.calculateTotalCost()} Dollars`)
 
   currentUser.calculateAllUsersBookings().map((booking) => {
-    createBookings(booking)
+    domUpdates.createBookings(bookingSection, booking)
   })
 }
 
@@ -194,39 +165,18 @@ const displayBookingDates = () => {
   const openRooms = currentUser.bookings.availableRooms(selectedDate)
   if (openRooms.length) {
       openRooms .map((room) => {
-        changeText(selectDateTitle, `Rooms Available On: ${dayjs(selectedDate).format('MM/DD/YYYY')}`)
+        domUpdates.changeText(selectDateTitle, `Rooms Available On: ${dayjs(selectedDate).format('MM/DD/YYYY')}`)
         uncheckRadioButtons()
-        hide(dateInput)
-        show(goBackButton)
-        show(filterTags)
-        show(tagsBox)
-        show(filterTagstitle)
-        availableRooms.innerHTML += `
-    <table class="booking-table">
-            <tr>
-              <th>Room Number:</th>
-              <th>Room Type:</th>
-              <th>Bidet:</th>
-              <th>Bed Size:</th>
-              <th>Number of beds</th>
-              <th>Price Per night:</th>
-              <th>Book now!</th>
-            </tr>
-            <tr>
-              <td>${room.number}</td>
-              <td>${room.roomType}</td>
-              <td>${room.bidet}</td>
-              <td>${room.bedSize}</td>
-              <td>${room.numBeds}</td>
-              <td>${room.costPerNight}</td>
-              <td><button id="${room.number}" class="book-now">Book</button></td>
-            </tr>
-          </table>
-    `
+        domUpdates.hide(dateInput)
+        domUpdates.show(goBackButton)
+        domUpdates.show(filterTags)
+        domUpdates.show(tagsBox)
+        domUpdates.show(filterTagstitle)
+        domUpdates.createAvailableRooms(availableRooms, room)
       })
     } else {
-    changeText(selectDateTitle, `We apologize for the inconvenience, No rooms available`)
-      show(goBackButton)
+    domUpdates.changeText(selectDateTitle, `We apologize for the inconvenience, No rooms available`)
+      domUpdates.show(goBackButton)
     }
 }
 
@@ -237,42 +187,15 @@ const filterCheckBoxes = () => {
       if (filteredRooms.length) {
         availableRooms.innerHTML = ''
         filteredRooms.map((room) =>{
-          changeText(filterTagstitle, `Available ${room.roomType}s`)
-          availableRooms.innerHTML += `
-    <table class="booking-table">
-            <tr>
-              <th>Room Number:</th>
-              <th>Room Type:</th>
-              <th>Bidet:</th>
-              <th>Bed Size:</th>
-              <th>Number of beds</th>
-              <th>Price Per night:</th>
-              <th>Book now!</th>
-            </tr>
-            <tr class="table-output">
-              <td>${room.number}</td>
-              <td>${room.roomType}</td>
-              <td>${room.bidet}</td>
-              <td>${room.bedSize}</td>
-              <td>${room.numBeds}</td>
-              <td>${room.costPerNight}</td>
-              <td><button id="${room.number}" class="book-now">Book</button></td>
-            </tr>
-          </table>`
+          domUpdates.changeText(filterTagstitle, `Available ${room.roomType}s`)
+          domUpdates.createAvailableRooms(availableRooms, room)
         })
-
       } else {
         availableRooms.innerHTML = ''
-        changeText(filterTagstitle, 'We apologize for the inconvenience, No rooms available')
+        domUpdates.changeText(filterTagstitle, 'We apologize for the inconvenience, No rooms available')
 
       }
     })
-  })
-}
-
-const uncheckRadioButtons = () => {
-  checkboxes.forEach((tag) => {
-    tag.checked = false
   })
 }
 
@@ -286,7 +209,7 @@ const filterRoomsByTag = (roomType) => {
 const postBookings =  (event) => {
   let room = parseInt(event.target.id, 10);
   let id = currentUser.id
-  const newBooking = currentUser.bookings.createNewBooking(room, id, selectedDate)
+  const newBooking = currentUser.bookings.createPostBooking(room, id, selectedDate)
   
   fetch('http://localhost:3001/api/v1/bookings', {
     method: 'POST',
@@ -296,22 +219,22 @@ const postBookings =  (event) => {
     }
   })
     .then((response) => response.json())
-    .catch((err) => changeText(pageTitle, `Error, Something went Wrong`));
+    .catch((err) => domUpdates.changeText(pageTitle, `Error, Something went Wrong`));
   availableRooms.innerHTML = ''
-  changeText(pageTitle, 'Loading Your Booking')
-  hide(filterTags)
-  hide(dateSelectionBox)
-  show(loadingbar)
+  domUpdates.changeText(pageTitle, 'Loading Your Booking')
+  domUpdates.hide(filterTags)
+  domUpdates.hide(dateSelectionBox)
+  domUpdates.show(loadingbar)
 
   setTimeout(() => {
-    fetchData()
-    hide(loadingbar)
-    changeText(pageTitle, 'Room Successfully Booked! ')
-    show(backToMainButton)
+    fetchNewData()
+    domUpdates.hide(loadingbar)
+    domUpdates.changeText(pageTitle, 'Room Successfully Booked! ')
+    domUpdates.show(backToMainButton)
   }, 2000);
 }
 
-const fetchData = () => {
+const fetchNewData = () => {
   const customerDatas = fetch('http://localhost:3001/api/v1/customers')
     .then((response) => response.json())
 
@@ -339,14 +262,14 @@ console.log(userName);
     return customer.id === userNumber
   })
   currentUser = new User(customer.id, customer.name, bookings)
-  displayUserName()
-    show(headNav)
-    show(mainPage)
-    hide(loginPage)
+    domUpdates.displayUserName(userTitle, currentUser)
+    domUpdates.show(headNav)
+    domUpdates.show(mainPage)
+    domUpdates.hide(loginPage)
 } else {
-    show(loginError)
+    domUpdates.show(loginError)
     setTimeout(() => {
-      hide(loginError)
+      domUpdates.hide(loginError)
     }, 2000)
   } 
 }
@@ -366,6 +289,6 @@ loginButton.addEventListener('click', function (event) {
   checkLogIn(event)
 })
 allRoomsRadioButton.addEventListener('change', function() {
-  changeText(filterTagstitle, 'All Rooms')
+  domUpdates.changeText(filterTagstitle, 'All Rooms')
   displayBookingDates()
 })

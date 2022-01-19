@@ -33,7 +33,7 @@ class Booking {
     return filter
   }
 
-  createNewBooking(roomNumber, customerId, date) {
+  createPostBooking(roomNumber, customerId, date) {
     let serialNumber = Math.random().toString(36).substr(2, 9);
     const createNewBooking = {
       id: serialNumber,
