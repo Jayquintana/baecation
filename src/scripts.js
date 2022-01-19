@@ -89,12 +89,13 @@ const createTodaysDate = () => {
 const backToMain = () => {
   bookingSection.innerHTML = ''
   availableRooms.innerHTML = ''
+  changeText(pageTitle, 'Book With baecation')
+  changeText(selectDateTitle, 'Start Booking, Select A Date:')
   hide(currentBookingButton)
   hide(pastBookingButton)
   hide(futureBookingButton)
   show(expenseTrackingButton)
   show(checkBookingsButton)
-  changeText(pageTitle, 'Book With baecation')
   hide(goBackButton)
   show(dateSelectionsection)
   show(dateInput)
@@ -200,6 +201,7 @@ const displayBookingDates = () => {
         show(goBackButton)
         show(filterTags)
         show(tagsBox)
+        // show()
         availableRooms.innerHTML += `
     <table class="booking-table">
             <tr>
@@ -224,7 +226,8 @@ const displayBookingDates = () => {
     `
       })
     } else {
-      changeText(pageTitle, 'Sorry No Rooms Available')
+    changeText(selectDateTitle, `Sorry, No Rooms Available`)
+      show(goBackButton)
     }
 }
 
@@ -262,6 +265,7 @@ const filterCheckBoxes = () => {
       } else {
         availableRooms.innerHTML = ''
         changeText(filterTagstitle, 'Sorry No Rooms Available')
+
       }
     })
   })
