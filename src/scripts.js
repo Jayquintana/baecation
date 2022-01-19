@@ -39,7 +39,7 @@ const backToMainButton = document.querySelector('.back-to-main');
 //login
 const loginButton = document.querySelector('#login-form-submit');
 const loginForm = document.querySelector('.login-form');
-const loginBox = document.querySelector('.login-error-msg-holder');
+const loginError = document.querySelector('.login-error-msg-holder');
 const logInheader = document.querySelector('.login-header');
 const loginPage = document.querySelector('.login-page');
 
@@ -200,7 +200,7 @@ const displayBookingDates = () => {
         show(goBackButton)
         show(filterTags)
         show(tagsBox)
-        // show()
+        show(filterTagstitle)
         availableRooms.innerHTML += `
     <table class="booking-table">
             <tr>
@@ -333,11 +333,19 @@ const checkLogIn = (event) => {
   const userName = loginForm.username.value;
   const password = loginForm.password.value;
   const userNumber = parseInt(userName.replace(/[^0-9]/g, ''), 10)
+
+  if(userName === `customer${userNumber}`) {
   const customer = customers.find((customer) => {
     return customer.id === userNumber
   })
   currentUser = new User(customer.id, customer.name, bookings)
   displayUserName()
+} else {
+    show(loginError)
+    setTimeout(() => {
+      hide(loginError)
+    }, 2000)
+}
 
   if (password === 'overlook2021') {
     show(headNav)
@@ -345,10 +353,10 @@ const checkLogIn = (event) => {
     hide(loginPage)
   } else {
     hide(logInheader)
-    show(loginBox)
+    show(loginError)
 
     setTimeout(() => {
-      hide(loginBox)
+      hide(loginError)
       show(logInheader)
     }, 2000);
   }
