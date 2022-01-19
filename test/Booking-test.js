@@ -230,6 +230,6 @@ const booking = new Booking(bookings, rooms)
     )
   })
   it('should create a booking based off a room', () => {
-    expect(booking.createNewBooking(2, 25 ,"2022/01/24" ).userID).to.equal(25)
+    expect(booking.createPostBooking(2, 25 ,"2022/01/24" ).userID).to.equal(25)
   })
 })
