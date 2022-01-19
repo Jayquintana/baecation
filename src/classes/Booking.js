@@ -44,7 +44,6 @@ class Booking {
     }
     return createNewBooking
   }
-  
 }
 
 module.exports = Booking;

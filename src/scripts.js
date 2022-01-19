@@ -102,6 +102,7 @@ const backToMain = () => {
 
 const checkCurrentBookings = () => {
   bookingSection.innerHTML = ''
+  domUpdates.hide(dateSelectionsection)
   domUpdates.hide(dateSelectionBox)
   domUpdates.hide(filterTags)
   domUpdates.hide(expenseTrackingButton)
@@ -207,31 +208,33 @@ const filterRoomsByTag = (roomType) => {
 }
 
 const postBookings =  (event) => {
-  let room = parseInt(event.target.id, 10);
-  let id = currentUser.id
-  const newBooking = currentUser.bookings.createPostBooking(room, id, selectedDate)
-  
-  fetch('http://localhost:3001/api/v1/bookings', {
-    method: 'POST',
-    body: JSON.stringify(newBooking),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-    .then((response) => response.json())
-    .catch((err) => domUpdates.changeText(pageTitle, `Error, Something went Wrong`));
-  availableRooms.innerHTML = ''
-  domUpdates.changeText(pageTitle, 'Loading Your Booking')
-  domUpdates.hide(filterTags)
-  domUpdates.hide(dateSelectionBox)
-  domUpdates.show(loadingbar)
+  if (event.target.id) {
+    let room = parseInt(event.target.id, 10);
+    let id = currentUser.id
+    const newBooking = currentUser.bookings.createPostBooking(room, id, selectedDate)
+    
+    fetch('http://localhost:3001/api/v1/bookings', {
+      method: 'POST',
+      body: JSON.stringify(newBooking),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .catch((err) => domUpdates.changeText(pageTitle, `Error, Something went Wrong`));
+    availableRooms.innerHTML = ''
+    domUpdates.changeText(pageTitle, 'Loading Your Booking')
+    domUpdates.hide(filterTags)
+    domUpdates.hide(dateSelectionBox)
+    domUpdates.show(loadingbar)
 
-  setTimeout(() => {
-    fetchNewData()
-    domUpdates.hide(loadingbar)
-    domUpdates.changeText(pageTitle, 'Room Successfully Booked! ')
-    domUpdates.show(backToMainButton)
-  }, 2000);
+    setTimeout(() => {
+      fetchNewData()
+      domUpdates.hide(loadingbar)
+      domUpdates.changeText(pageTitle, 'Room Successfully Booked! ')
+      domUpdates.show(backToMainButton)
+    }, 2000);
+  }
 }
 
 const fetchNewData = () => {
@@ -256,12 +259,12 @@ const checkLogIn = (event) => {
   const userName = loginForm.username.value;
   const password = loginForm.password.value;
   const userNumber = parseInt(userName.replace(/[^0-9]/g, ''), 10)
-console.log(userName);
+
   if (userName === `customer${userNumber}` && password === 'overlook2021') {
-  const customer = customers.find((customer) => {
+    const customer = customers.find((customer) => {
     return customer.id === userNumber
   })
-  currentUser = new User(customer.id, customer.name, bookings)
+    currentUser = new User(customer.id, customer.name, bookings)
     domUpdates.displayUserName(userTitle, currentUser)
     domUpdates.show(headNav)
     domUpdates.show(mainPage)
